@@ -1,0 +1,18 @@
+{
+  "name": "ai-bar-tiktok-live",
+  "version": "1.0.0",
+  "description": "Quán Bar 3D Online tương tác thời gian thực cho TikTok LIVE",
+  "scripts": {
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently -k -n \"SERVER,CLIENT\" -c \"cyan,magenta\" \"npm run server\" \"npm run client\"",
+    "start": "node server/src/server.js"
+  },
+  "keywords": ["tiktok-live", "threejs", "webgl", "interactive-livestream", "metaverse"],
+  "author": "Senior Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

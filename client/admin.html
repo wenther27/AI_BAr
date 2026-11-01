@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bảng Điều Khiển Host - Quán Bar Online</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎛️</text></svg>">
+    <link rel="stylesheet" href="/src/ui/style.css" />
+    <style>
+      body {
+        background: #0b0f19;
+        overflow-y: auto;
+        padding: 24px;
+        color: #f1f5f9;
+      }
+      .admin-layout {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .panel-card {
+        background: #151c2e;
+        border: 1px solid #2d3748;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      }
+      .panel-title {
+        font-size: 18px;
+        font-weight: 800;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #00f2fe;
+      }
+      .input-row {
+        display: flex;
+        gap: 10px;
+      }
+      input[type="text"] {
+        flex: 1;
+        background: #0b0f19;
+        border: 1px solid #3b4252;
+        border-radius: 10px;
+        padding: 12px 16px;
+        color: #fff;
+        font-size: 15px;
+        outline: none;
+      }
+      input[type="text"]:focus {
+        border-color: #00f2fe;
+      }
+      button.btn {
+        background: linear-gradient(135deg, #00f2fe, #4facfe);
+        border: none;
+        border-radius: 10px;
+        padding: 12px 20px;
+        color: #000;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+      }
+      button.btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+      }
+      button.btn-danger {
+        background: linear-gradient(135deg, #ff2d55, #ff6b8b);
+        color: #fff;
+      }
+      button.btn-danger:hover {
+        box-shadow: 0 4px 15px rgba(255, 45, 85, 0.4);
+      }
+      button.btn-outline {
+        background: transparent;
+        border: 1px solid #3b4252;
+        color: #fff;
+      }
+      button.btn-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-top: 10px;
+      }
+      .status-connected {
+        background: rgba(46, 204, 113, 0.2);
+        color: #2ecc71;
+        border: 1px solid #2ecc71;
+      }
+      .status-disconnected {
+        background: rgba(255, 45, 85, 0.2);
+        color: #ff2d55;
+        border: 1px solid #ff2d55;
+      }
+      .grid-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+      }
+      .badge-hotkey {
+        background: rgba(0,0,0,0.3);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 11px;
+        margin-left: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-layout">
+      <header style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h1 style="font-size: 24px; font-weight: 900; background: linear-gradient(90deg, #FF2D55, #00F2FE); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            🎛️ BẢNG ĐIỀU KHIỂN QUÁN BAR HOST
+          </h1>
+          <p style="font-size: 13px; opacity: 0.7; margin-top: 4px;">
+            Dùng để điều khiển phòng livestream, kết nối TikTok LIVE và chạy giả lập thử nghiệm.
+          </p>
+        </div>
+        <a href="/" target="_blank" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+          <span>Mở Cảnh 3D Live</span> ↗
+        </a>
+      </header>
+
+      <!-- 1. Kết nối TikTok LIVE -->
+      <div class="panel-card">
+        <div class="panel-title">📡 1. Kết nối TikTok LIVE thật của Host</div>
+        <div class="input-row">
+          <input type="text" id="input-username" placeholder="Nhập @username TikTok (ví dụ: @domixivn)" />
+          <button class="btn" id="btn-connect">Kết nối LIVE</button>
+          <button class="btn btn-danger" id="btn-disconnect">Ngắt kết nối</button>
+        </div>
+        <div id="connect-status" class="status-pill status-disconnected">
+          <span style="font-size: 10px;">●</span> Chưa kết nối tới tài khoản TikTok
+        </div>
+      </div>
+
+      <!-- 2. Giả lập tương tác (Demo / Mock) -->
+      <div class="panel-card">
+        <div class="panel-title">🎮 2. Thử nghiệm Demo / Giả lập tương tác (Mock Events)</div>
+        <p style="font-size: 13px; opacity: 0.8; margin-bottom: 14px;">
+          Bạn có thể test trực tiếp bằng cách bấm các nút bên dưới hoặc phím số trên bàn phím:
+        </p>
+        <div class="grid-buttons">
+          <button class="btn btn-outline" id="btn-mock-member">
+            👤 Người vào sàn <span class="badge-hotkey">[Phím 1]</span>
+          </button>
+          <button class="btn btn-outline" id="btn-mock-chat">
+            💬 Người xem chat <span class="badge-hotkey">[Phím 5]</span>
+          </button>
+          <button class="btn btn-outline" id="btn-mock-like">
+            ❤️ Thả tim (Like) <span class="badge-hotkey">[Phím 6]</span>
+          </button>
+          <button class="btn btn-outline" id="btn-mock-gift-small">
+            🎁 Tặng Quà Nhỏ (1💎) <span class="badge-hotkey">[Phím 2]</span>
+          </button>
+          <button class="btn btn-outline" id="btn-mock-gift-med">
+            💎 Tặng Quà Vừa (50💎) <span class="badge-hotkey">[Phím 3]</span>
+          </button>
+          <button class="btn btn-outline" id="btn-mock-gift-super">
+            👑 SIÊU VIP (1200💎) <span class="badge-hotkey">[Phím 4]</span>
+          </button>
+        </div>
+
+        <div style="margin-top: 16px; display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 10px;">
+          <button class="btn" id="btn-toggle-autobot">🤖 Bật Auto-Mock Bot Tự Động</button>
+          <span id="autobot-status" style="font-size: 13px; opacity: 0.7;">Đang tắt bot tự động</span>
+        </div>
+      </div>
+
+      <!-- 3. Chọn Thể Loại Nhạc Sàn (Royalty-Free) -->
+      <div class="panel-card">
+        <div class="panel-title">🎵 3. Chọn Thể Loại Nhạc Quán Bar (100% Không Bản Quyền)</div>
+        <p style="font-size: 13px; opacity: 0.8; margin-bottom: 12px;">
+          Bấm để chuyển ngay phong cách nhạc cho sàn nhảy (hoặc bấm phím <b>M</b> trên màn hình 3D):
+        </p>
+        <div class="grid-buttons">
+          <button class="btn btn-outline btn-genre" data-genre="vinahouse">
+            🔥 Vinahouse Nonstop (138 BPM)
+          </button>
+          <button class="btn btn-outline btn-genre" data-genre="cyber_edm">
+            ⚡ Cyber EDM Festival (128 BPM)
+          </button>
+          <button class="btn btn-outline btn-genre" data-genre="deep_house">
+            🌙 Deep House Lounge (122 BPM)
+          </button>
+          <button class="btn btn-outline btn-genre" data-genre="techno_rave">
+            💥 Rave Hard Techno (144 BPM)
+          </button>
+          <button class="btn btn-outline btn-genre" data-genre="hiphop_trap">
+            🧢 Hip-Hop Trap 808 (96 BPM)
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Cấu hình Cảnh 3D & Sàn nhảy -->
+      <div class="panel-card">
+        <div class="panel-title">📐 4. Cài đặt Cảnh 3D & Khung hình</div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn btn-outline" id="btn-ratio-169">🖥️ Tỉ lệ 16:9 (Ngang OBS)</button>
+          <button class="btn btn-outline" id="btn-ratio-916">📱 Tỉ lệ 9:16 (Dọc TikTok)</button>
+          <button class="btn btn-danger" id="btn-clear-floor">🧹 Làm mới / Dọn sạch sàn</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/admin.js"></script>
+  </body>
+</html>

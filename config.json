@@ -1,0 +1,54 @@
+{
+  "server": {
+    "port": 3000,
+    "wsPort": 8080,
+    "corsOrigin": "*"
+  },
+  "bar": {
+    "name": "🔥 QUÁN BAR ONLINE VIP 🔥",
+    "theme": "cyber_club",
+    "aspectRatio": "16:9",
+    "maxCharacters": 80,
+    "stageSlots": 3
+  },
+  "giftTiers": {
+    "small": {
+      "minDiamonds": 1,
+      "maxDiamonds": 9,
+      "duration": 15,
+      "danceSpeed": 1.1,
+      "title": "Quà Nhỏ",
+      "effects": ["spotlight"]
+    },
+    "medium": {
+      "minDiamonds": 10,
+      "maxDiamonds": 99,
+      "duration": 30,
+      "danceSpeed": 1.35,
+      "title": "Quà Vừa",
+      "effects": ["spotlight", "confetti"]
+    },
+    "large": {
+      "minDiamonds": 100,
+      "maxDiamonds": 999,
+      "duration": 45,
+      "danceSpeed": 1.6,
+      "title": "Quà Lớn",
+      "priority": "center",
+      "effects": ["spotlight", "confetti", "fireworks", "lasers"]
+    },
+    "super": {
+      "minDiamonds": 1000,
+      "duration": 60,
+      "danceSpeed": 2.0,
+      "title": "SIÊU ĐẠI GIA",
+      "priority": "center_solo",
+      "effects": ["all", "screen_takeover", "fireworks", "gold_confetti"]
+    }
+  },
+  "audio": {
+    "defaultVolume": 0.6,
+    "enableProceduralBeat": true,
+    "playlist": []
+  }
+}
